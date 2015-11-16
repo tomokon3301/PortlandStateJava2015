@@ -3,6 +3,8 @@ package edu.pdx.cs410J.tokon;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.StringContains.containsString;
@@ -17,12 +19,31 @@ public class StudentTest extends InvokeMainTestCase
 {
 
   @Test
+  public void allStudentsSayThisClassIsTooMuchWork() {
+    Student student = new Student("name", new ArrayList(), 3.22, "male");
+    assertThat(student.says(), equalTo("This class is too much work"));
+  }
+
+  //@Test
+  public void studentToStringTest () {
+    ArrayList classes = new ArrayList();
+    classes.add("Algorithms");
+    classes.add("Operating Systems");
+    classes.add("Java");
+
+    Student dave = new Student("Dave", new ArrayList(), 3.64, "male");
+
+    assertThat(dave.toString(), equalTo("Dave has a GPA of 3.64 and is taking 3 classes: Algorithms, Operating Systems, and Java.  He says \"This class is too much work\"."));
+
+  }
+
+  //@Test
   public void invokingMainWithNoArgumentsHasExitCodeOf1() {
     MainMethodResult result = invokeMain(Student.class);
     assertThat(result.getExitCode(), equalTo(1));
   }
 
-  @Test
+  //@Test
   public void invokingMainWithNoArgumentsPrintsMissingArgumentsToStandardError() {
     MainMethodResult result = invokeMain(Student.class);
     assertThat(result.getErr(), containsString("Missing command line arguments"));
